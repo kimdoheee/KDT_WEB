@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS</title>
+
+    <link rel="stylesheet" href="CSS/styles.css">
+    <!-- 현재 경로 : http://127.0.0.1:5500/HTML 에 CSS/styles.css 를 붙인거다-->
+    <style>
+        /* CSS 의 세상 */
+        /* CSS 의 주석 */
+        /* 
+            CSS 기본구문
+            selector { property : value; property : value; ...}  
+            누구한테    어떻게 적용하느냐
+        */
+
+        p { /* p element 를 선택 */
+            border: 1px solid tomato;
+            padding: 30px;
+            margin: 50px;   /* margin : 외부여백 */
+        }
+            
+        #p01 {   /* id 가 p01 인 element 를 선택해서 적용*/
+            color: magenta;
+        }
+
+        .error {    /* class 가 error 값을 가진 element 를 선택 */
+            color: darkorange;
+        }
+    </style>
+
+</head>
+
+<!--
+    CSS : Cascading Style Sheets.
+    HTML elements 들이 화면상에 어떻게 표시될지 기술함.
+    
+    적용방식 3가지
+    1. Inline : 시작태그에 style 속성과 함께 기술 (가장 마지막에 적용됨.)
+    2. Internal : <head> 안에 <style> 태그로 기술
+    3. External : 외부 파일 (*.css) 로 만들고 연결
+-->
+
+<body>
+
+    <h1>This is a heading1</h1>
+    <p>This is a paragraph1</p>
+    <h1>This is a heading2</h1>
+    <p style="color: yellow;">This is a paragraph2</p>
+
+    <hr>
+
+    <h1>This is a heading3</h1>
+    <p>This is a paragraph3</p>
+    <p id="p01" style="color: green;">I am different1</p>
+
+    <hr>
+
+    <p>This is a paragraph4</p>
+    <p>This is a paragraph5</p>
+    <p class="error">I am different2.</p>
+    <p>This is a paragraph6</p>
+    <p class="error">I am different too3.</p>
+
+</body>
+
+</html>
