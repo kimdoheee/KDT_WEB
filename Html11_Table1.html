@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Table1</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;  /* border 간격 붙이기 */
+        }
+
+        th, td {
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<!--
+	HTML 문서에 '표' 를 나타내기 위한 태그로 <table> 제공
+	다음 태그들과 같이 사용된다.
+	<tr> : table row
+	<td> : table data (디폴트값은 좌측 정렬)
+	<th> : table header (td 보다 글씨체 굵게 표현되고 가운데 정렬)
+	    실제 내용을 담는 태그는 td, th 다.
+	<thead> : table header 들을 담는 태그
+	<tbody> : table body 들을 담는 태그
+        thead, tbody 는 구조적으로 많이 사용
+
+	정렬관련 (td, th 에 적용)
+	좌우 정렬: text-align
+	세로 정렬: vertical-align (디폴트값은 middle 값)
+-->
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center;">4</td>
+                <td style="background-color: yellow;">5</td>
+                <td>6</td>
+            </tr>
+            <tr style="height: 150px;">
+                <td style="vertical-align: bottom;">7</td>
+                <td style="text-align: right;">8</td>
+                <td style="vertical-align: top;">9</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>
