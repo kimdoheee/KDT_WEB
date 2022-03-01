@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form 데이터</title>
+    <style>
+        div#btnBox {
+            position: fixed;
+            right: 0px;
+            top: 0px;
+            margin: 4px;
+            border: 1px solid orange;
+            width: 180px;
+
+        }
+
+        div#btnBox * {
+            margin: 2px;
+        }
+    </style>
+</head>
+<!-- 
+	JavaScript 로 
+	다양한 form element 들의 '값을 가져 올수도' 있어야 한며,
+	반대로 '값을 입력해야 할수도' 있다.
+	
+	JavaScript 는 form element 들을 접근할수 있는
+	다양한 방법들을 제공한다.  (특히 name 값 활용!)
+
+    ★form 에서 읽어온 값은 무.조.건 string 이다!
+-->
+
+<!-- 
+	※ 각 form element별 동작하는 것으로 JS 와 HTML 코드 작성하면서 확인 하기 
+-->
+
+<script>
+    function showData(){
+        var result = "입력결과<br>";
+
+        // <form> element 객체 가져오기
+        var frm = document.forms['myform1'];  // 해당 form 객체들만 가져옴 (name='myform1' 인 <form> element 객체)
+        // frm = document.forms.myform1;   // 위의 코드와 동일
+
+        // 1. 일반적인 input 값     .value 값   // .value 는 input 안에 사용자가 입력한 값 (문자열로 넘어옴)
+        var username = frm['username'].value;
+        // username = document.forms['myform1']['username'].value; // var frm, var username 지정안하고 바로 한 줄로도 코딩 가능
+        // username = document.forms.myform1.username.value;   // 위의 코드와 동일
+        result += "이름: " + username + "<br>";
+
+        // 2. checkbox 의 값        .checked 로 판단
+        var hobby = [];
+        if(frm['drive'].checked){   // drive 가 check 되었을 때 (boolean 값으로 출력)
+            hobby.push(frm['drive'].value);    // true 이면 value 값 출력
+        }
+        // frm['drive'].checked && hobby.push(frm['drive'].value); // 위의 코드와 동일
+        
+        if(frm['music'].checked){   // music 가 check 되었을 때 (boolean 값으로 출력)
+            hobby.push(frm['music'].value);    // true 이면 value 값 출력
+        }
+
+        if(frm['sports'].checked){   // sports 가 check 되었을 때 (boolean 값으로 출력)
+            hobby.push(frm['sports'].value);    // true 이면 value 값 출력
+        }
+        result += "취미: " + hobby.join(',') + "<br>";
+
+        // 3. checkbox      동일한 name 이 복수개인 경우
+        // frm['skill']    -> name='skill' 인 form elements 의 array 임을 뜻한다.
+        var skill = [];
+        // for(i = 0; i < frm['skill'].length; i++){
+        //     if(frm['skill'][i].checked){     // frm['skill'][i] : checkbox 의 element
+        //         skill.push(frm['skill'][i].value);
+        //      }
+        // }
+        for(e of frm['skill']){
+            if(e.checked){   //  위의 코드와 동일 (e 가 frm['skill'][i])
+                skill.push(e.value)
+            // e.checked && skill.push(e.value); // if 문과 동일한 코드
+            }
+        }
+        result += "보유기술: " + skill + "<br>"; 
+
+        // 4. radio : 동일한 name 으로 구성 (3번과 유사. 단, 하나만 check)
+        var gender = "";
+        for(e of frm['gender']){
+            if(e.checked){
+                gender = e.value;
+                break;  // 하나만 check 가능
+            }
+        }
+        result += "성별: " + gender + "<br>";
+
+        // 5. <select> : 단일   .value 사용
+        result += "좋아하는 차1: " + frm['cars'].value + "<br>";
+
+        // 6. <select> : multiple   .selected 사용 (3번과 유사)
+        var cars2 = [];
+        for(e of frm['cars2']){
+            e.selected && cars2.push(e.value);
+        }
+        result += "좋아하는 차2: " + cars2.join(',') + "<br>";
+
+        // 7. <textarea> : .innerHTML 혹은 .value 로 값을 가져올 수 있다. (두가지 방법)
+        // result += "메모: " + frm['message'].innerHTML + "<br>";  // .innerHTML : 'HTML' content 값이 출력된다. (사용 X)
+        result += "메모: " + frm['message'].value + "<br>";         // .value : '현재' 사용자가 입력한 값이 출력된다.
+        
+
+        document.getElementById('result').innerHTML = result;
+    }
+
+    function setData(){
+        var frm = document.forms['myform1'];
+
+        // input
+        frm['username'].value = '홍길동';
+
+        // checkbox
+        frm['drive'].checked = false;
+        frm['music'].checked = true;
+        frm['sports'].checked = true;
+
+        // checkbox (동일 name)
+        frm['skill'][0].checked = false;    
+        frm['skill'][1].checked = true;
+        frm['skill'][2].checked = true;
+
+        // radio button (checked 로 하기)
+        frm['gender'][0].checked = true;
+
+        // select (단일)
+        // frm['cars'].value = 'fiat';  // 해당 value 값을 바꾸기
+        frm['cars'][2].selected = true; // 위의 코드와 동일
+
+        // select (multiple)
+        frm['cars2'][0].selected = true;
+        frm['cars2'][1].selected = false;
+        frm['cars2'][2].selected = true;
+        frm['cars2'][3].selected = false;
+
+        // textarea : .value 혹은 .innerHTML 둘 다 가능
+        frm['message'].value = "안녕하세요";
+    }
+
+    
+</script>
+
+<body>
+    <div id="btnBox">
+        <button type="button" onclick="showData();">입력값 보여주기</button>
+        <br>
+        <button type="button" onclick="setData();">입력값 세팅</button>
+        <br>
+        <p id="result"></p>
+    </div>
+
+    <form name="myform1">
+        이름:<br>
+        <input type="text" name="username"><br>
+        <br>
+
+        취미:<br>
+        <input type="checkbox" name="drive" value="driving">드라이빙<br>
+        <input type="checkbox" name="music" value="music">음악<br>
+        <input type="checkbox" name="sports" value="sports">운동<br>
+        <br>
+
+        보유기술:<br>
+        <input type="checkbox" name="skill" value="자바">JAVA<br>
+        <input type="checkbox" name="skill" value="닷넷">.Net<br>
+        <input type="checkbox" name="skill" value="애플">iOS<br>
+        <br>
+
+
+        성별:<br>
+        <input type="radio" name="gender" value="male">남<br>
+        <input type="radio" name="gender" value="female">여<br>
+        <input type="radio" name="gender" value="animal">동물<br>
+        <br>
+
+        좋아하는 차1:<br>
+        <select name="cars">
+            <option value="volvo">볼보</option>
+            <option value="saab">사브</option>
+            <option value="fiat">피아트</option>
+            <option value="audi" selected>아우디</option>
+        </select>
+        <br><br>
+
+        좋아하는 차2:<br>
+        <select name="cars2" size="4" multiple>
+            <option value="volvo">볼보</option>
+            <option value="saab" selected>사브</option>
+            <option value="fiat">피아트</option>
+            <option value="audi" selected>아우디</option>
+        </select>
+        <br><br>
+
+
+        메모:<br>
+        <textarea name="message" style="width:200px; height:100px">The cat was playing in the garden.</textarea>
+        <br>
+
+        <!-- <input type="submit" value="제출">  -->
+
+    </form>
+
+    <!--
+        <form name="myform2">
+            별명:<br>
+            <input type="text" name="nickname">
+    
+            <br><br>
+            <input type="submit" value="제출">
+    
+        </form>
+    -->
+
+
+</body>
+
+</html>
